@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<form #reservarForm (ngSubmit)="comprarReservacion(reservarForm)">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Usuario</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" disabled value={{reservacion.usuario}}>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Productos</label>
+      <input *ngFor="let producto of reservacion.productos" class="form-control" type="text" disabled value={{producto}}>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Mesa</label>
+        <select [(ngModel)]="comprar.mesa" name="mesa" class="form-control">
+            <option value="" selected disabled>Elige una mesa</option>
+            <option *ngFor="let mesa of mesas" value={{mesa._id}}>{{mesa.numero}}</option>
+        </select>
+      </div>
+    <button type="submit" class="btn btn-primary" style="margin-top:5px ;">Reservar</button>
+    <button type="submit" class="btn btn-primary" style="margin-top:5px ; margin-left: 5px;" (click)="eliminarReservacion()">Eliminar</button>
+  </form>

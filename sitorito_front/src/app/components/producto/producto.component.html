@@ -1,0 +1,146 @@
+<app-navbar></app-navbar>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Si Torito</title>
+    <link rel="stylesheet" href="./producto.component.css">
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <button class="btn btn-warning" data-bs-target="#agregarModal" data-bs-toggle="modal">Agregar</button>
+
+        <div class="card" *ngFor="let producto of productos">
+            <div class="contenido">
+                <h3>{{producto.nombre}}</h3>
+                <p *ngIf="identity.role=='ADMIN'">{{producto.descripcion}}</p>
+                <p>Q{{producto.precio}}</p>
+                <p *ngIf="identity.role=='ADMIN'">{{producto.stock}}</p>
+                <button class="btn" style="margin-right:6px" *ngIf="identity.role=='ADMIN'" data-bs-target="#actualizarModal" data-bs-toggle="modal"  (click)="obtenerProducto(producto)" >Actualizar</button>
+                <button class="btn" *ngIf="identity.role=='ADMIN'" (click)="eliminarProducto(producto)" >Eliminar</button>
+                <button class="btn" *ngIf="identity.role!='ADMIN'" data-bs-target="#reservarModal" data-bs-toggle="modal" (click)="obtenerProducto(producto)">Reservar</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+
+  <!-- Modal -->
+  <div class="modal fade" id="agregarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #agregarForm (ngSubmit)="agregarProducto(agregarForm)">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nombre</label>
+                    <input [(ngModel)]="producto.nombre" name="nombre" type="text" class="form-control" placeholder="Escribe aqui el nombre">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Descipcion</label>
+                      <input [(ngModel)]="producto.descripcion" name="descipcion" type="text" class="form-control" placeholder="Escribe aqui la descipcion">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Stock</label>
+                    <input [(ngModel)]="producto.stock" name="stock" type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Precio</label>
+                      <input [(ngModel)]="producto.precio" name="precio" type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Categoria</label>
+                    <select [(ngModel)]="producto.categoria" name="categoria" class="form-control">
+                        <option value="" selected disabled>elige aqui la categoria</option>
+                        <option *ngFor="let categoria of categorias" value={{categoria._id}}>{{categoria.nombre}}</option>
+                    </select>
+                  </div>
+                <button type="submit" style="color:black ;" data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal actualizar -->
+  <div class="modal fade" id="actualizarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Actualizar producto</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #actualizarForm (ngSubmit)="actualizarProducto(actualizarForm)">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Nombre</label>
+                    <input [(ngModel)]="oneProducto.nombre" name="nombre" type="text" class="form-control" placeholder="Escribe aqui el nombre">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Descipcion</label>
+                      <input [(ngModel)]="oneProducto.descripcion" name="descipcion" type="text" class="form-control" placeholder="Escribe aqui la descipcion">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Stock</label>
+                    <input [(ngModel)]="oneProducto.stock" name="stock" type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Precio</label>
+                      <input [(ngModel)]="oneProducto.precio" name="precio" type="number" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Categoria</label>
+                    <select [(ngModel)]="oneProducto.categoria" name="categoria" class="form-control">
+                        <option value={{oneProducto.categoria}} selected disabled>Cambia aqui la categoria</option>
+                        <option *ngFor="let categoria of categorias" value={{categoria._id}}>{{categoria.nombre}}</option>
+                    </select>
+                  </div>
+                <button type="submit" style="color:black ;" data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Reservar -->
+   <div class="modal fade" id="reservarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #reservarForm (ngSubmit)="reservarProducto(reservarForm)">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Stock</label>
+                    <input [(ngModel)]="producto.stock" name="nombre" type="number" class="form-control" placeholder="Escribe aqui el nombre">
+                </div>
+                <button type="submit" style="color:black ;" data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>

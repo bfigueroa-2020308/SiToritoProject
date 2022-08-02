@@ -1,0 +1,39 @@
+<app-navbar></app-navbar>
+<section class="section text-center text-lg-start">
+    <style>
+      .cascading-right {
+        margin-right: -50px;
+      }
+  
+      @media (max-width: 991.98px) {
+        .cascading-right {
+          margin-right: 0;
+        }
+      }
+    </style>
+  
+    <div class="container py-4">
+      <div class="row g-0 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card cascading-right" style="
+              background: hsla(0, 0%, 100%, 0.55);
+              backdrop-filter: blur(30px);
+              ">
+            <div class="card-body p-5 shadow-5 text-center">
+                <h2 class="fw-bold mb-5">Bienvenido a SiTorito!</h2>
+                <h3 class="fw-bold mb-5">Si quieres comenzar a comprar, registrate!</h3>
+                <button class="fw-bold mb-5; btn btn-warning" routerLink="/register">Registrate Aqui!</button>
+                <button class="fw-bold mb-5; btn btn-warning"routerLink="/login">Ya tienes cuenta? Logeate Aqui!</button>
+            </div>
+            <button class="fw-bold mb-5; btn btn-danger" routerLink="/loginVIP">Eres vip? Usa este boton!</button>
+          </div>
+        </div>
+  
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <img src="../../../assets/images/client.jpg" class="w-100 rounded-4 shadow-4"
+            alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+

@@ -1,0 +1,143 @@
+<app-navbar></app-navbar>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+
+    <link rel="stylesheet" href="./mesa.component.css" />
+</head>
+<body>
+    
+    <header>
+        <h1>Mesas</h1>
+        <form id="new-sucursal">
+            <button style="color: black" *ngIf="identity.role=='ADMIN'" data-bs-toggle="modal" data-bs-target="#agregarModal" class="btn btn-warning">Agregar Mesa</button>
+        </form>
+    </header>
+
+    <main>
+
+        <section class="sucursal-list">
+            <h2>Mesas</h2>
+
+            <div id="sucursales" *ngFor="let mesa of mesas">
+
+                <div class="sucurusal">
+                    <div class="content">
+                        <input 
+                            type="text"
+                            class="text"
+                            value={{mesa.numero}}
+                            readonly
+                            />
+                            <input 
+                            type="text"
+                            class="text"
+                            value={{mesa.ocupada}}
+                            readonly
+                            />
+                            <input 
+                            type="text"
+                            class="text"
+                            value={{mesa.tipo}}
+                            readonly
+                            />
+                            <div class="actions">
+                                <button class="edit" *ngIf="identity.role=='ADMIN'" data-bs-target="#actualizarModal" data-bs-toggle="modal" (click)="obtenerMesa(mesa)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                                  </svg>
+                                </button>
+                                <button class="delete" *ngIf="identity.role=='ADMIN'" (click)="eliminarMesa(mesa)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                  </svg></button>
+                                
+                            </div>
+                    </div>
+                   
+                </div>
+        
+            </div>
+
+        </section>
+
+    </main>
+
+
+</body>
+</html>
+ 
+  <!-- Modal -->
+  <div class="modal fade" id="agregarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar Mesa</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #agregarForm (ngSubmit)="agregarMesa(agregarForm)">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Tipo</label>
+                    <select [(ngModel)]="mesa.tipo" name="tipo" class="form-control">
+                        <option value="" selected>Elige el tipo</option>
+                        <option value="VIP"> VIP</option>
+                        <option value="CLIENT">Comun</option>
+                    </select>
+                </div>
+                <button type="submit" style="color:black ;" data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
+              </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Modal Actualizar -->
+    <div class="modal fade" id="actualizarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Actualizar Mesa</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form #actualizarForm (ngSubmit)="actualizarMesa(actualizarForm)">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Numero</label>
+                    <input [(ngModel)]="oneMesa.numero" name="nombre" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Escribe el nombre aqui">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Ocupada</label>
+                    <select [(ngModel)]="oneMesa.ocupada" name="ocupada" class="form-control">
+                        <option value="" selected disabled>{{oneMesa.ocupada}}</option>
+                        <option value="false">Libre</option>
+                        <option value="true">Ocupada</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Tipo</label>
+                    <select [(ngModel)]="oneMesa.tipo" name="tipo" class="form-control">
+                        <option value="" selected disabled>{{oneMesa.tipo}}</option>
+                        <option value="VIP">VIP</option>
+                        <option value="CLIENT">Comun</option>
+                    </select>
+                  </div>
+                  <button type="submit" style="color:black ;" data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
+                </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>

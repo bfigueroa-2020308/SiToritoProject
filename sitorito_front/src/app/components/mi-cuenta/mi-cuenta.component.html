@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Si Torito</title>
+    <link rel="stylesheet" href="./mi-cuenta.component.css">
+</head>
+
+<body>
+
+    <div class="contenedor">
+        <div class="card">
+            <figure>
+            </figure>
+            <div class="contenido">
+                <form #actualizarForm (ngSubmit)="actualizarUsuario(actualizarForm)">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Nombre</label>
+                      <input [(ngModel)]="user.nombre" name="nombre" type="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Apellido</label>
+                        <input [(ngModel)]="user.apellido" name="apellido" type="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input [(ngModel)]="user.username" name="username" type="email" class="form-control">
+                    </div>    
+                    <button type="submit" class="btn btn-primary" *ngIf="identity.role!='ADMIN'" >Actualizar</button>
+                  </form>
+                  <button class="btn btn-danger" *ngIf="identity.role!='ADMIN'" (click)="eliminarUsuario()">Eliminar Cuenta</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">SiTorito</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" *ngIf="token" routerLink="/productos">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" *ngIf="identity.role=='ADMIN'" routerLink="/categorias">Categoria</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" *ngIf="identity.role=='ADMIN'" routerLink="/mesas">Mesas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" *ngIf="identity.role!='ADMIN' && token" routerLink="/reservacion">Reservacion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" *ngIf="identity.role=='ADMIN'" routerLink="/registerVIP">Agregar un VIP</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" *ngIf="token" routerLink="/miCuenta">MiCuenta</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" *ngIf="token" (click)="cerrarSesion()" routerLink="">Cerrar Sesion</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
